@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>IA - AIGAF</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<a href="https://revealjs.com">
+						<img src="udabol.png" alt="UDABOL" style="height: 180px; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+					</a>
+					<h3>Inteligencia Artificial Generativa con Spring Boot</h3>
+					<p>
+						<small>Realizado por: Cesar Nilton Vincenty Funes<br>cesarnvf .profesional.bo@gmail.com<br><a href="https://cesarnvf-profesional-bo.github.io" target="_blank">Pagina WEB</a><br><a href="https://github.com/cesarnvf-profesional-bo" target="_blank">Repositorio</a></small>
+					</p>
+				</section>
+				<section>
+					<h2>Temario</h2>
+					<p>
+						<ol>
+							<li>Definici&oacute;n</li>
+							<li>Ejemplo pr&aacute;ctico</li>
+							<li>Preguntas</li>
+						</ol>
+					</p>
+				</section>
+				<section>
+					<h2>Inteligencia Artificial</h2>
+					<p>
+						la Inteligencia Artificial (IA) se define como el campo de estudio que se ocupa de crear sistemas informáticos inteligentes, capaces de realizar tareas que normalmente requieren inteligencia humana. Esto incluye actividades como el aprendizaje, la percepción, el razonamiento, la resolución de problemas y la toma de decisiones.
+					</p>
+				</section>
+				<section>
+					<h2>Inteligencia Artificial Generativa</h2>
+					<p>
+						La Inteligencia Artificial generativa es un tipo que se enfoca en la creación de contenido nuevo a partir de patrones y datos existentes, puede producir texto, imágenes, música, video y otros tipos de contenido.
+					</p>
+				</section>
+				<section>
+					<h2>Spring Boot</h2>
+					<p>
+						Es un marco de trabajo que simplifica considerablemente el desarrollo de aplicaciones Java, proporcionando un entorno de desarrollo muy fácil.
+					</p>
+				</section>
+				<section>
+					<h2>Spring AI</h2>
+					<p>
+						El proyecto Spring AI tiene como objetivo agilizar el desarrollo de aplicaciones que incorporen funcionalidades de inteligencia artificial sin complejidad innecesaria.
+					</p>
+				</section>
+				<section>
+					<h2>Ejemplo pr&aacute;ctico</h2>
+					<p>
+						<img src="sbstart.png" alt="Spring Boot Start" style="height: auto; margin: 0 auto 4rem auto; background: transparent;" class="demo-logo">
+					</p>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">aplication.properties</h2>
+					<pre data-id="code-animation"><code class="hljs java" data-trim data-line-numbers>
+spring.application.name=iaaigaf
+
+spring.ai.openai.api-key=sk-proj-xxxx
+
+spring.ai.openai.chat.options.model=gpt-3.5-turbo
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Inicio Controlador</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						@RestController
+						@RequestMapping("/api/v1/ia")
+						public class InicioControlador {
+
+							@Autowired
+							ChatModel chatModel;
+
+							@GetMapping("/preguntame")
+							public String preguntame(@RequestParam String pregunta) {
+								return chatModel.call(pregunta);
+							}
+
+						}
+
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Base de datos</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						PGPASSWORD=123qwe dropdb -h localhost -p 5432 -U postgres iaaigafbd
+						PGPASSWORD=123qwe createdb -h localhost -p 5432 -U postgres iaaigafbd
+						PGPASSWORD=123qwe psql -h localhost -p 5432 -U postgres -d iaaigafbd -f iaaigafTablas001.sql
+						PGPASSWORD=123qwe psql -h localhost -p 5432 -U postgres -d iaaigafbd -f iaaigafDatos001.sql
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Base de datos</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						drop schema public;
+						create schema public;
+						create table activosfijos(
+							idactivodijo serial not null primary key,
+							activofijo varchar,
+							costoinicial varchar,
+							vidautil integer,
+							fechacompra date
+						);
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Base de datos</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+insert into activosfijos(activofijo, costoinicial, vidautil, fechacompra) values
+('EQUIPO DE COMPUTACION', 5500.00, 48, '01/01/2022'),
+('ESCRITORIO DE MADERA', 1500.00, 120, '01/03/2019'),
+('LAPTOP', 9500.00, 48, '01/01/2023');
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Modelo</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						@Data
+						public class Activosfijos {
+							private Long idactivodijo;
+							private String activofijo;
+							private BigDecimal costoinicial;
+							private Integer vidautil;
+							private LocalDate fechacompra;
+						}
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Repositorio</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+@Mapper
+public interface ActivosfijosRepositorio {
+
+    @Select("select * from activosfijos")
+    List&lt;Activosfijos&gt; obtenerTodos();
+}
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Servicio</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+@Service
+public class ActivosfijosServicio {
+
+	@Autowired
+	ActivosfijosRepositorio activosfijosRepositorio;
+
+	public List&lt;Activosfijos&gt; obtenerTodos() {
+		return activosfijosRepositorio.obtenerTodos();
+	}
+}
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Controlador</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+@RestController
+@RequestMapping("/api/v1/activosfijos")
+public class ActivosfijosControlador {
+
+    @Autowired
+    ActivosfijosServicio activosfijosServicio;
+
+    @GetMapping
+    ResponseEntity &lt;?&gt; obtenerTodos(){
+        return new ResponseEntity&lt;List&lt;Activosfijos&gt;&gt;(activosfijosServicio.obtenerTodos(), HttpStatus.OK);
+    }
+}
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Actualizacion application.properties</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						spring.datasource.driver-class-name=org.postgresql.Driver
+						spring.datasource.url=jdbc:postgresql://localhost:5432/iaaigafbd
+						spring.datasource.username=postgres
+						spring.datasource.password=123qwe
+
+						mybatis.type-aliases-package=bo.edu.udabol.iaaigaf.modelo
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Actualizacion Servicio</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+						@Autowired
+						ChatModel chatModel;
+
+						....
+
+						public String listarActivosfijos(List&lt;Activosfijos&gt; activos) {
+							StringBuilder sb = new StringBuilder("Lista de activos fijos:\n");
+							for (Activosfijos activo : activos) {
+								sb.append(String.format("ID: %d, Activo: %s, Costo Inicial: %s, Vida Útil: %d años, Fecha de Compra: %s\n",
+										activo.getIdactivodijo(), activo.getActivofijo(), activo.getCostoinicial(),
+										activo.getVidautil(), activo.getFechacompra()));
+							}
+							return sb.toString();
+						}
+
+						public String preguntame(String pregunta) {
+							List&lt;Activosfijos&gt; activosfijos = activosfijosRepositorio.obtenerTodos();
+							String listaActivosFijos = listarActivosfijos(activosfijos);
+							String preguntaConDatos = listaActivosFijos + "\n\nPregunta: " + pregunta;
+							return chatModel.call(preguntaConDatos);
+						}
+					</code></pre>
+				</section>
+				<section data-auto-animate>
+					<h2 data-id="code-title">Actualizacion Controlador</h2>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers>
+	@GetMapping("/lista")
+    public String ListarActivosfijos() {
+        return activosfijosServicio.listarActivosfijos(activosfijosServicio.obtenerTodos());
+    }
+
+    @GetMapping("/preguntame")
+    public String preguntame(@RequestParam String pregunta) {
+        return activosfijosServicio.preguntame(pregunta);
+    }
+					</code></pre>
+				</section>
+				<section style="text-align: left;">
+					<h1>Preguntas ...</h1>
+					<p>
+						Muchas gracias por su atencion.
+					</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
